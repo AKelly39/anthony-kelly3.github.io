@@ -59,6 +59,9 @@ function toUpperCase(string) {
  */
 function toDashCase(string) {
     // YOUR CODE BELOW HERE //
+    let re = / /gi;
+    var newstr = string.toLowerCase().replace(re, '-');
+    return newstr;
 
 
 
@@ -122,6 +125,7 @@ function endsWith(string, char) {
  */
 function concat(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
+    return stringOne.concat("", stringTwo);
 
 
 
@@ -141,6 +145,7 @@ function concat(stringOne, stringTwo) {
 function join(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
     var args = Array.from(arguments);
+    return args.join("");
 
 
     // YOUR CODE ABOVE HERE //
@@ -177,6 +182,15 @@ function longest(stringOne, stringTwo) {
  */
 function sortAscending(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
+    if (stringOne < stringTwo){
+        return 1;
+    } //else 
+    if (stringOne > stringTwo){
+        return -1;
+    } //else 
+    if (stringOne === stringTwo){
+        return 0;
+    } 
 
 
 
@@ -193,6 +207,15 @@ function sortAscending(stringOne, stringTwo) {
  */
 function sortDescending(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
+    if (stringOne < stringTwo){
+        return -1;
+    } //else 
+    if (stringOne > stringTwo){
+        return 1;
+    } //else 
+    if (stringOne === stringTwo){
+        return 0;
+    } 
 
 
 

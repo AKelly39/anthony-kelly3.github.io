@@ -13,7 +13,23 @@
  */
 function createGreaterThanFilter(base) {
     // YOUR CODE BELOW HERE //
-    
+    if (typeof(base) === "number"){
+        return function(value){
+            if (value > base){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else if (typeof(base) === "string"){
+        return function(value){
+            if (value > base){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
     
     
     
@@ -27,7 +43,23 @@ function createGreaterThanFilter(base) {
  */
 function createLessThanFilter(base) {
     // YOUR CODE BELOW HERE //
-    
+    if (typeof(base) === "number"){
+        return function(value){
+            if (value < base){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else if (typeof(base) === "string"){
+        return function(value){
+            if (value < base){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
     
     
     
@@ -41,7 +73,13 @@ function createLessThanFilter(base) {
  */
 function createStartsWithFilter(startsWith) {
     // YOUR CODE BELOW HERE //
-    
+    return function(string){
+        if (string[0].toLowerCase() === startsWith || string[0].toUpperCase() === startsWith){
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
     
@@ -55,7 +93,13 @@ function createStartsWithFilter(startsWith) {
  */
 function createEndsWithFilter(endsWith) {
     // YOUR CODE BELOW HERE //
-    
+    return function(string){
+        if (string[string.length - 1].toLowerCase() === endsWith || string[string.length - 1].toUpperCase() === endsWith){
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     
     
@@ -71,7 +115,11 @@ function createEndsWithFilter(endsWith) {
  */
 function modifyStrings(strings, modify) {
     // YOUR CODE BELOW HERE //
-    
+    var modified = [];
+    for(let i = 0; i < strings.length; i++){
+        modified.push(modify(strings[i]));
+    }
+    return modified;
     
     
     
@@ -89,7 +137,12 @@ function modifyStrings(strings, modify) {
  */
 function allStringsPass(strings, test) {
     // YOUR CODE BELOW HERE //
-    
+    for(let i = 0; i < strings.length; i++){
+        if (!test(strings[i])){
+            return false;
+        }
+    }
+    return true;
     
     
     
