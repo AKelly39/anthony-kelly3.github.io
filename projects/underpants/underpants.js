@@ -21,6 +21,9 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
+_.identity = function(value){
+    return value;
+}
 
 /** _.typeOf
 * Arguments:
@@ -42,6 +45,28 @@ var _ = {};
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf = function(value) {
+    // YOUR CODE BELOW HERE //
+    if (typeof(value) === "string"){
+        return "string";
+    } else if (typeof(value) === "number"){
+        return "number";
+    } else if (typeof(value) === "boolean"){
+        return "boolean";
+    }else if (value === null){
+        return "null";
+    }else if (typeof(value)  === "function"){
+        return "function";
+    }else if (typeof(value)  === "undefined"){
+        return "undefined";
+    }else if ((value instanceof Date) === true){
+        return "date";
+    } else if (Array.isArray(value)){
+        return "array";
+    } else if (typeof(value) === 'object' && Array.isArray(value) === false && value !== null && value instanceof Date === false) {
+        return "object";
+    }
+}
 
 /** _.first
 * Arguments:
@@ -61,6 +86,25 @@ var _ = {};
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 
+_.first = function(arr, num){
+    var ray = [];
+    if (!Array.isArray(arr)){
+        return [];
+    } else if (typeof num !== "number"){
+        return arr[0];
+    } else if(num < 0) {
+        return [];
+    } else if(num <= arr.length && num >= 0) {
+        for (let i = 0; i < num; i++){
+            ray.push(arr[i]);
+        }
+    } else if(num > arr.length) {
+        for (let i = 0; i < arr.length; i++){
+            ray.push(arr[i]);
+        }
+    }
+    return ray;
+}
 
 /** _.last
 * Arguments:
@@ -80,6 +124,32 @@ var _ = {};
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function(arr, num){
+    //var vers = [];
+    var ray = [];
+    if (!Array.isArray(arr)){
+        return [];
+    } else if (typeof num !== "number"){
+        return arr[arr.length - 1];
+    } else if(num < 0) {
+        return [];
+    } else if(num <= arr.length && num >= 0) {
+        var vers = [];
+        for (let i = num; i > 0; i--){
+            vers.push(arr[i]);
+        }
+        for (let i = vers.length - 1; i >= 0; i--){
+            ray.push(vers[i]);
+        }
+    } else if(num > arr.length) {
+        for (let i = 0; i < arr.length; i++){
+        //for (let i = arr.length - 1; i >= 0; i--){
+            ray.push(arr[i]);
+        }
+    }
+    return ray;
+}
+
 
 /** _.indexOf
 * Arguments:
@@ -97,6 +167,20 @@ var _ = {};
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
 
+_.indexOf = function(arr, value){
+    var result = []
+    for(var i = 0; i < arr.length; i++){
+        if(arr[i] === value){
+            result.push(i);
+        }
+    }
+    if (result.length > 0){
+        return result[0];
+    } else {
+        return -1;
+    }
+}
+
 
 /** _.contains
 * Arguments:
@@ -112,6 +196,10 @@ var _ = {};
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+
+_.contains = function(array, value){
+    return (array.includes(value) ? true : false);
+}
 
 
 /** _.each
@@ -130,6 +218,19 @@ var _ = {};
 *      -> should log "a" "b" "c" to the console
 */
 
+_.each = function(collection, callback){
+    if (Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            callback(collection[i], i, collection);
+        }
+
+    } else if (typeof(collection) === 'object' && Array.isArray(collection) === false && collection !== null && collection instanceof Date === false) {
+        for(var key in collection){
+            callback(collection[key], key, collection);
+        }
+    }
+}
+
 
 /** _.unique
 * Arguments:
@@ -140,6 +241,16 @@ var _ = {};
 * Examples:
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
+
+_.unique = function(array){
+    var diff = [];
+    for (let i = 0; i < array.length; i++){
+        if (array.indexOf(array[i]) === i){
+            diff.push(array[array.indexOf(array[i])]);
+        }
+    }
+    return diff;
+}
 
 
 /** _.filter
@@ -158,6 +269,16 @@ var _ = {};
 *   use _.each in your implementation
 */
 
+_.filter = function(array, callback){
+    var filtered = [];
+    for (let i = 0; i < array.length; i++){
+        if (callback(array[i], i, array)){
+            filtered.push(array[i]);
+        }
+    }
+    return filtered;
+}
+
 
 /** _.reject
 * Arguments:
@@ -171,6 +292,16 @@ var _ = {};
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+
+_.reject = function(array, callback){
+    var rejected = [];
+    for (let i = 0; i < array.length; i++){
+        if (!callback(array[i], i, array)){
+            rejected.push(array[i]);
+        }
+    }
+    return rejected;
+}
 
 
 /** _.partition
@@ -192,6 +323,23 @@ var _ = {};
 }
 */
 
+_.partition = function(array, callback){
+    var accepted = [];
+    var rejected = [];
+    var partitioned = [];
+    for (let i = 0; i < array.length; i++){
+        if (callback(array[i], i, array)){
+            accepted.push(array[i]);
+        } else {
+            rejected.push(array[i]);
+        }
+    }
+    partitioned.push(accepted);
+    partitioned.push(rejected);
+    return partitioned;
+    
+}
+
 
 /** _.map
 * Arguments:
@@ -209,6 +357,22 @@ var _ = {};
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+_.map = function(collection, callback){
+    let mapped = [];
+    if (Array.isArray(collection)) {
+        for(var i = 0; i < collection.length; i++){
+            var result = callback(collection[i], i, collection);
+            mapped.push(result);
+        }
+    } else {
+        for (let key in collection){
+            mapped.push(callback(collection[key], key, collection));
+        }
+    }
+    return mapped;
+}
+
+
 
 /** _.pluck
 * Arguments:
@@ -220,6 +384,10 @@ var _ = {};
 * Examples:
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
+
+_.pluck = function(array, key){
+    return array.map(o => o[key]);
+}
 
 
 /** _.every
@@ -243,6 +411,40 @@ var _ = {};
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+_.every = function(collection, callback){
+    
+    if(callback === undefined){
+        if (Array.isArray(collection)){
+            for (var i = 0; i < collection.length; i++){
+                if(!collection[i]){
+                    return false;
+                }
+            }
+            
+
+        } else {
+            for (let key in Object){
+                if (!collection[key]){
+                    return false;
+                }
+            }
+
+        }
+        return true;
+
+    } else { 
+        if (Array.isArray(collection)){
+            for (let i = 0; i < collection.length; i++){
+                if (!callback(collection[i], i, collection)){
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+}
+
 
 /** _.some
 * Arguments:
@@ -265,6 +467,43 @@ var _ = {};
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+_.some = function(collection, callback){
+    if(callback === undefined){
+        if (Array.isArray(collection)){
+            for (var i = 0; i < collection.length; i++){
+                if(collection[i]){
+                    return true;
+                }
+            }
+
+        } else {
+            for (let key in Object){
+                if (collection[key]){
+                    return true;
+                }
+            }
+
+        }
+    } else { 
+        if (Array.isArray(collection)){
+            for (let i = 0; i < collection.length; i++){
+                if (callback(collection[i], i, collection)){
+                    return true;
+                } 
+            } 
+        } else {
+            for (let key in collection){
+                if (callback(collection[key], key, collection)){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+
+}
+
+
 
 /** _.reduce
 * Arguments:
@@ -285,6 +524,23 @@ var _ = {};
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function(array, callback, seed) {
+    if (seed === undefined){
+        seed = array[0];
+        for (let i = 1; i < array.length; i++){
+            seed = callback(seed, array[i], i);
+        }
+    } else {
+        for (let i = 0; i < array.length; i++){
+            seed = callback(seed, array[i], i);
+        }
+    }
+    return seed;
+
+}
+
+
+
 
 /** _.extend
 * Arguments:
@@ -300,6 +556,16 @@ var _ = {};
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(base){
+    var updated = {};
+    var args = Array.from(arguments);
+    for (var i = 1; i < args.length; i++){
+        updated = Object.assign(base, args[i]);
+    }
+    return updated;
+
+}
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////

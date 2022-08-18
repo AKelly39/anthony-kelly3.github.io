@@ -3,7 +3,7 @@
 'use strict';
 
 var customers = require('./data/customers.json');
-var _ = require(/* Replace this with the name of your lodown! */);
+var _ = require('underbar');
 
 /**
  * 1. Import your lodown module using the require() method,
@@ -16,20 +16,52 @@ var _ = require(/* Replace this with the name of your lodown! */);
  *
  * 4. To test your work, run the following command in your terminal:
  *
- *    npm start --prefix ./<YOUR_GITHUB_FOLDER/projects/let-s-get-functional
+ *    npm start --prefix ./anthony-kelly3.github.io/projects/let-s-get-functional
  *
  *    IMPORTANT: Make sure you replace <YOUR_GITHUB_FOLDER with your actual github folder name that is in your workspace.
  */
 
 var maleCount = function(array) {
+    var males = _.filter(array, function(customer){
+        return customer.gender === "male";
+    })
+    return males.length;
 
 };
 
-var femaleCount;
+var femaleCount = function(array) {
+    var females = _.reduce(array, function(seed, customer){
+        if(customer.gender === "female"){
+        seed += 1;
+        }
+        return seed;
+    }, 0);
+    return females;
+};;
 
-var oldestCustomer;
+var oldestCustomer = function(array) {
+    var oldest = _.reduce(array, function(seed, customer) {
+		if(seed.age > customer.age) {
+		  return seed;
+		}
+		else {
+		  return customer;
+		}
+	}, {});
+    return oldest.name;
+};
 
-var youngestCustomer;
+var youngestCustomer= function(array) {
+    var youngest = _.reduce(array, function(seed, customer) {
+		if(seed.age < customer.age) {
+		  return seed;
+		}
+		else {
+		  return customer;
+		}
+	}, {});
+    return youngest.name;
+};
 
 var averageBalance;
 
