@@ -1,0 +1,29 @@
+{
+  "name": "lodown-akelly393",
+  "version": "1.0.1",
+  "description": "lodown library",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover _mocha -- test/ -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKelly39/anthony-kelly3.github.io.git"
+  },
+  "keywords": [
+    "lodown"
+  ],
+  "author": "akelly39",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKelly39/anthony-kelly3.github.io/issues"
+  },
+  "homepage": "https://github.com/AKelly39/anthony-kelly3.github.io#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "i": "^0.3.7",
+    "istanbul": "^0.4.5",
+    "mocha": "^10.0.0",
+    "sinon": "^14.0.0"
+  }
+}
