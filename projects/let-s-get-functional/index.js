@@ -3,7 +3,7 @@
 'use strict';
 
 var customers = require('./data/customers.json');
-const _ = require('lodown-akelly393');
+const _ = require('underbar');
 
 /**
  * 1. Import your lodown module using the require() method,
@@ -25,6 +25,7 @@ var maleCount = function(array) {
     var males = _.filter(array, function(customer){
         return customer.gender === "male";
     })
+    //console.log(males);
     return males.length;
 
 };
