@@ -64,17 +64,108 @@ var youngestCustomer= function(array) {
     return youngest.name;
 };
 
-var averageBalance;
+var averageBalance = function(array) {
+  var totalBalance = _.reduce(array, function(total, customer){
+      //seed += Number(customer.balance.slice(1));
+      let bal = parseFloat(customer.balance.replace(/[^0-9\.]+/g,"") );
+      //let lance = bal.slice(2);
+      console.log(bal);
+      total += bal;
+      return total;
+  }, 0);
+  var average = totalBalance / array.length;
+  console.log(average);
+  return average;
+};
 
-var firstLetterCount;
+var firstLetterCount = function(array, letter) {
+  var firstLetter = _.filter(array, function(customer){
+      return customer.name[0].toLowerCase() === letter.toLowerCase();
+  })
+  return firstLetter.length;
+};
 
-var friendFirstLetterCount;
 
-var friendsCount;
+var friendFirstLetterCount = function(array, customer, letter){
+  var chosen;
+  for(let i = 0; i < array.length; i++){
+    if(array[i].name === customer){
+      chosen = array[i];
+    }
+  }
+  var firstFriendLetter = _.filter(chosen.friends, function(friendsObject){
+    return friendsObject.name[0].toLowerCase() === letter.toLowerCase();
+  })
+  return firstFriendLetter.length;
 
-var topThreeTags;
 
-var genderCount;
+};
+
+
+var friendsCount = function(array, name){
+  /*
+  var given;
+  for(let i = 0; i < array.length; i++){
+    if(array[i].name === name){
+      given = array[i];
+    }
+  }
+  */
+  var friendCount = _.reduce(array, function(arr, customer){
+    //return customer.friends.includes(name);
+    //if (customer.friends.includes(name)
+    for(let i = 0; i < customer.friends.length; i++){
+      if(customer.friends[i].name === name){
+        arr.push(customer.name);
+      }
+    }
+    return arr;
+  }, []);
+  console.log(friendCount.length);
+  return friendCount;
+
+};
+
+//object.entries(tag)
+
+var topThreeTags = function(array){
+  var tag = _.reduce(array, function(obj, customer){
+    let common = customer.tags;
+    for(let i = 0; i < common.length; i++){ 
+      if (obj[common[i]]) { 
+        obj[common[i]] += 1;
+      } else { 
+        obj[common[i]] = 1;
+      }
+    }
+    return obj;
+  }, {});
+  let sorted = Object.entries(tag).sort(([,a],[,b]) => a-b);
+  let arr = [];
+  let ray = [];
+  //console.log(tag);
+  for(let i = sorted.length - 1; i <= sorted.length; i--){
+    arr.push(sorted[i]);
+  }
+  for(let j = 0; j < 3; j++){
+    ray.push(arr[i]);
+  }
+
+  return ray;
+
+};
+
+var genderCount = function(array) {
+  var genders = _.reduce(array, function(obj, customer){ 
+      if (obj[customer.gender]) { 
+        obj[customer.gender] += 1;
+      } else { 
+        obj[customer.gender] = 1;
+      }
+      return obj;
+    }, {});
+  return genders;  
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
